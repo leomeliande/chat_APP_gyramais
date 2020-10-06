@@ -1,0 +1,27 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "server.js",
+  "license": "MIT",
+
+  "author": {
+    "name": "Leonardo Meliande",
+    "email": "leo.meliande25@outlook.com"
+  },
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "graphql": "^14.1.1",
+    "graphql-subscriptions": "^1.0.0",
+    "graphql-yoga": "^1.18.3",
+    "mongoose": "^5.4.12",
+    "subscriptions-transport-ws": "^0.9.15"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
