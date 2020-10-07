@@ -23,11 +23,13 @@ module.exports = {
     createMessage: async(_, {
       user,
       message,
+      timestamp
     }) => {
       try {
           const msg = await Messages.messageCollection.create({
             user,
             message,
+            timestamp
           })
           pubsub.publish('newMessage', {
             newMessage: msg,

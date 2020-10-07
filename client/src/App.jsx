@@ -7,7 +7,7 @@ import "shards-ui/dist/css/shards.min.css";
 
 import "./index.css";
 import Chat from "./Chat";
-import Login from "./Login";
+//import Login from "./Login";
 
 const App = () => <Chat />;
 
