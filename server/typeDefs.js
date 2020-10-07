@@ -3,6 +3,7 @@ const typeDefs = `
         id: ID!
         user: String!
         message: String!
+        timestamp: String!
     }
 
     type Query {
@@ -10,7 +11,7 @@ const typeDefs = `
     }
     
     type Mutation {
-        createMessage(user: String! message: String!): Message!
+        createMessage(user: String! message: String! timestamp: String!): Message!
     }
 
     type Subscription {
