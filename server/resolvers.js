@@ -6,9 +6,11 @@ const {
 
 const pubsub = new PubSub();
 const Messages = require("./models/Messages");
+const notifications = [];
 
 module.exports = {
   Query: {
+    notifications: () => notifications, 
     messages: async() => { 
       try {
         const getMessages = await Messages.messageCollection.find();
@@ -40,11 +42,25 @@ module.exports = {
           return error;
       }
     },
+
+    pushNotification: (root, args) => {
+      const newNotification = { label: args.label };
+      notifications.push(newNotification);
+
+      pubsub.publish('newNotification', {
+        newNotification: newNotification
+      });
+      return newNotification;
+    },
   },
 
   Subscription: {
     newMessage: {
       subscribe: () => pubsub.asyncIterator('newMessage'),
     },
+
+    newNotification: {
+      subscribe: () => pubsub.asyncIterator('newNotification')
+    }
   },
 };

@@ -6,6 +6,7 @@ import {
 } from "@apollo/client";
 import { Container, Row, Col, FormInput, Button } from "shards-react";
 import apolloClient from "./ApolloSetup";
+import { useToasts } from 'react-toast-notifications'
 import "./index.css";
 
 import {
@@ -13,6 +14,12 @@ import {
     CreateMessageMutation,
     MessageSubscription,
 } from "./Chat-query"
+
+import {
+    NotificationQuery,
+    PushNotificationMutation,
+    NotificationSubscription,
+} from "./Notification-query"
 
 const Messages = ({ user }) => {
 
@@ -92,10 +99,12 @@ const Messages = ({ user }) => {
 }
 
 const Welcome = ({user, onSignOut})=> {
+
+    // Mensagem de boas vindas no chat e botão de logoff
     return (
     <>
         <h1 className='welcome-message'>
-            Seja bem vindo(a):
+            Seja bem vindo(a) 
             <strong
                 style={{
                     marginLeft: '10px',
@@ -114,26 +123,29 @@ const Welcome = ({user, onSignOut})=> {
             <Button 
                 type="button"
                 onClick={onSignOut}
+                pill theme="success"
             >Logoff</Button>
         </div>
     </>
     )
 }
   
-  class LoginForm extends Component {
+class LoginForm extends Component {
 
+    // Função para guardar o nome de usuario inserido
     handleSignIn(e) {
-      e.preventDefault()
-      if (this.refs.username.value.length > 0) {
+        e.preventDefault()
+        if (this.refs.username.value.length > 0) {
         let username = this.refs.username.value
         this.props.onSignIn(username)
-      } else {
-          alert("Insira um nome de usuario valido!!");
-      }
+        } else {
+            alert("Insira um nome de usuario valido!");
+        }
     }
-    
+
+    // Tela de login
     render() {
-      return (
+        return (
         <div
             style={{ 
                 display: "flex",
@@ -149,12 +161,12 @@ const Welcome = ({user, onSignOut})=> {
                         justifyContent: "center",
                     }}
                 >
-                <input type="text" ref="username" placeholder="Nome de usuario" style={{
+                <input type="text" ref="username" placeholder="Nickname" style={{
                     border: "2px solid #e5e6ea",
                     borderRadius: 5,
                     textAlign: "center",
                 }}/>
-                <Button type="submit" value="Entrar" style={{
+                <Button outline theme="success" type="submit" value="Entrar" style={{
                     marginLeft: "5px"
                 }} onClick={this.handleSignIn.bind(this)}>
                     Entrar
@@ -162,54 +174,54 @@ const Welcome = ({user, onSignOut})=> {
                 </div>
             </form>
         </div>
-      )
+        )
     }
-  }
+}
   
-  class Login extends Component {
-    
+class Login extends Component {
+
     constructor(props) {
-      super(props)
-      // Estado inicial da aplicação
-      this.state = {
-        user: null
-      }
+        super(props)
+        // Estado inicial de usuário
+        this.state = {
+            user: null
+        }
     }
-    
+
     // Funções de modificação
     signIn(username) {
-      // Diz para o programa que o estado de user recebe o valor passado por parâmetro
-      this.setState({
-        user: {
-          username,
-        }
-      })
+        // Diz para o programa que o estado de user recebe o valor passado por parâmetro
+        this.setState({
+            user: {
+                username,
+            }
+        })
     }
-    
+
     signOut() {
-      // Limpa o user do state que foi definido
-      this.setState({user: null})
+        // Limpa o user do state que foi definido
+        this.setState({user: null})
     }
-    
+
     // Chama as classes passando o nome de usuário como parâmetro
     render() {
-      return (
+        return (
         <div>
-          { 
+            { 
             (this.state.user) ? 
-              <Welcome 
-               user={this.state.user} 
-               onSignOut={this.signOut.bind(this)} 
-              />
+                <Welcome 
+                user={this.state.user}
+                onSignOut={this.signOut.bind(this)} 
+                />
             :
-              <LoginForm 
-               onSignIn={this.signIn.bind(this)} 
-              />
-          }
+                <LoginForm 
+                onSignIn={this.signIn.bind(this)} 
+                />
+            }
         </div>
-      )
+        )
     }
-  }
+}
 
 const Chat = ({ user }) => {
 
@@ -218,7 +230,7 @@ const Chat = ({ user }) => {
         message: "",
         timestamp: "",
     });
-    
+
     // Mutation para criar a mensagem e enviar para o GraphQL
     const [ createMessage ] = useMutation(CreateMessageMutation);
 
@@ -289,7 +301,7 @@ const Chat = ({ user }) => {
 };
 
 export default () => (
-  <ApolloProvider client={apolloClient}>
-    <Login />
-  </ApolloProvider>
+    <ApolloProvider client={apolloClient}>
+        <Login />
+    </ApolloProvider>
 );

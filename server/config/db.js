@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const dbURI =
-  "mongodb+srv://leomeliande:xbYzPnQz1WpwQN93@cluster0.xshul.gcp.mongodb.net/gyramais?retryWrites=true&w=majority";
+  "mongodb+srv://gyramais:d3Lw1JUOFfjEfpGI@cluster0.xshul.gcp.mongodb.net/gyramais?retryWrites=true&w=majority";
 
 try {  
   mongoose.connect(dbURI, { 

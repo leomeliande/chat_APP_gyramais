@@ -34,7 +34,7 @@ const MessageSubscription = gql`
 `;
 
 export {
-  MessageQuery,
-  CreateMessageMutation,
-  MessageSubscription,
+    MessageQuery,
+    CreateMessageMutation,
+    MessageSubscription,
 };
